@@ -6,6 +6,12 @@ import com.vaadin.server.FileResource;
 import com.vaadin.server.VaadinService;
 import com.vaadin.ui.Image;
 
+/**
+ * Helper class
+ * 
+ * @author Santiago Faci
+ * @version April 2015
+ */
 public class Util {
 	
 	public static Image getImage(String name) {

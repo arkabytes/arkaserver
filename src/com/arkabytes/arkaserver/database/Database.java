@@ -14,6 +14,7 @@ import com.vaadin.server.VaadinService;
 
 /**
  * Manage database connection
+ * 
  * @author Santiago Faci
  * @version April 2015
  */
@@ -23,12 +24,12 @@ public class Database {
 	private final String DB_CONF = "db.properties";
 	
 	/**
-	 * Load database driver
+	 * 
 	 * @throws Exception
 	 */
-	public Database() throws Exception {
+	public Database() {
 			
-		Class.forName("com.mysql.jdbc.Driver").newInstance(); 
+		 
 	}
 	
 	/**
@@ -36,14 +37,15 @@ public class Database {
 	 * @throws SQLException
 	 * @throws IOException
 	 */
-	public void connect() throws SQLException, IOException {
+	public void connect(String database) throws SQLException, IOException, IllegalAccessException, InstantiationException, ClassNotFoundException {
+		
+		Class.forName("com.mysql.jdbc.Driver").newInstance();
 		
 		String basepath = VaadinService.getCurrent().getBaseDirectory().getAbsolutePath();
 		FileResource fileResource = new FileResource(new File(basepath + "/WEB-INF/conf/" + DB_CONF));
 		Properties props = new Properties();
 		props.load(fileResource.getStream().getStream());
 		String host = props.getProperty("host");
-		String database = props.getProperty("database");
 		String username = props.getProperty("username");
 		String password = props.getProperty("password");
 	
@@ -76,9 +78,59 @@ public class Database {
 			user.setWeb(result.getString("web"));
 			user.setIcon(result.getString("icon"));
 			
+			result.close();
 			return user;
 		}
 		
 		return null;
+	}
+	
+	public User getUser(String username) throws SQLException {
+		
+		User user = null;
+		String sql = "SELECT * FROM users WHERE username = ?";
+		PreparedStatement statement = connection.prepareStatement(sql);
+		statement.setString(1, username);
+		
+		ResultSet result = statement.executeQuery();
+		if (result.first()) {
+			user = new User();
+			user.setUsername(result.getString("username"));
+			user.setName(result.getString("name"));
+			user.setPrimaryEmail(result.getString("primary_email"));
+			user.setSecondaryEmail(result.getString("secondary_email"));
+			user.setWeb(result.getString("web"));
+			user.setPhone(result.getString("phone"));
+		}
+		
+		return user;
+	}
+	
+	public void updateUser(User user) 
+		throws SQLException {
+		
+		String sql = null;
+		if (user.getPassword() == null) {
+			sql = "UPDATE users SET name = ?, primary_email = ?, secondary_email = ?, " +
+					"web = ?, phone = ? WHERE username = ?";
+		} else {
+			sql = "UPDATE users SET password = MD5(?), name = ?, primary_email = ?, secondary_email = ?, " +
+					"web = ?, phone = ? WHERE username = ?";
+		}
+		PreparedStatement statement = connection.prepareStatement(sql);
+		int pos = 1;
+		if (user.getPassword() != null) {
+			statement.setString(1, user.getPassword());
+			pos++;
+		}
+		statement.setString(pos++, user.getName());
+		statement.setString(pos++, user.getPrimaryEmail());
+		statement.setString(pos++, user.getSecondaryEmail());
+		statement.setString(pos++, user.getWeb());
+		statement.setString(pos++, user.getPhone());
+		statement.setString(pos++, user.getUsername());
+		
+		statement.executeUpdate();
+		statement.close();
 	}
 }

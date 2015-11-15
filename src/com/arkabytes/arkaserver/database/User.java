@@ -1,5 +1,11 @@
 package com.arkabytes.arkaserver.database;
 
+/**
+ * Represents information about user profile
+ * 
+ * @author Santiago Faci
+ * @version April 2015
+ */
 public class User {
 
 	private int id;
