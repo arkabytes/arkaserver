@@ -1,5 +1,8 @@
 package com.arkabytes.arkaserver.database;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Represents information about user profile
  * 
@@ -18,8 +21,10 @@ public class User {
 	private String icon;
 	private String web;
 	
+	private List<Domain> domains;
+	
 	public User() {
-		
+		domains = new ArrayList<Domain>();
 	}
 	
 	public int getId() {
@@ -77,5 +82,8 @@ public class User {
 		this.web = web;
 	}
 	
-	
+	@Override
+	public String toString() {
+		return username;
+	}
 }

@@ -4,7 +4,7 @@ import com.arkabytes.arkaserver.database.User;
 
 public class ControlPanelModel {
 
-	public void saveUserData(User user) {
+	public void addUser(User user) {
 		
 	}
 }
