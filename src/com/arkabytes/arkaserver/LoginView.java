@@ -91,7 +91,7 @@ public class LoginView extends AbstractView {
 	
 	private void trySignin() {
 		try {
-			db.connect("arkaserver");
+			db.connect();
 			
 			User user = db.signin(tfUser.getValue(), tfPassword.getValue());
 			if (user == null) {

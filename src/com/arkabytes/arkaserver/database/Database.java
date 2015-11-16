@@ -37,7 +37,7 @@ public class Database {
 	 * @throws SQLException
 	 * @throws IOException
 	 */
-	public void connect(String database) throws SQLException, IOException, IllegalAccessException, InstantiationException, ClassNotFoundException {
+	public void connect() throws SQLException, IOException, IllegalAccessException, InstantiationException, ClassNotFoundException {
 		
 		Class.forName("com.mysql.jdbc.Driver").newInstance();
 		
@@ -46,6 +46,7 @@ public class Database {
 		Properties props = new Properties();
 		props.load(fileResource.getStream().getStream());
 		String host = props.getProperty("host");
+		String database = props.getProperty("database");
 		String username = props.getProperty("username");
 		String password = props.getProperty("password");
 	
