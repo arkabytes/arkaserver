@@ -12,7 +12,8 @@ CREATE TABLE users (
 
 CREATE TABLE virtual_domains (
     id int unsigned primary key auto_increment,
-    name varchar(50) NOT NULL
+    name varchar(50) NOT NULL,
+    user_id int unsigned
 ) ENGINE=InnoDB;
 
 CREATE TABLE IF NOT EXISTS `virtual_users` (
