@@ -102,7 +102,8 @@ public class LoginView extends AbstractView {
 				tfUser.clear();
 				tfPassword.clear();
 				tfPassword.setValue("");
-				getSession().setAttribute("username", user.getUsername());
+				getSession().setAttribute(User.class, user);
+				//getSession().setAttribute("username", user.getUsername());
 				Notification.show("Sign in ok!", "Wellcome " + user.getName(), Notification.Type.HUMANIZED_MESSAGE);
 				navigator.navigateTo(Constants.CONTROL_PANEL_VIEW);
 			}

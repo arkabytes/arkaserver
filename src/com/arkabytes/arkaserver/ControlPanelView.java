@@ -72,8 +72,9 @@ public class ControlPanelView extends AbstractView {
 		logoutLink = new ActiveLink("Sign out", new ExternalResource(""));
 		logoutLink.addListener(new LinkActivatedListener() {
 			public void linkActivated(LinkActivatedEvent event) {
-				Notification.show("Bye " + ((String) getSession().getAttribute("username")) + "!", Notification.Type.HUMANIZED_MESSAGE);
-				getSession().setAttribute("username", null);
+				String username = getSession().getAttribute(User.class).getName();
+				Notification.show("Bye " + username + "!", Notification.Type.HUMANIZED_MESSAGE);
+				getSession().setAttribute(User.class, null);
 				navigator.navigateTo(Constants.LOGIN_VIEW);
 			}
 		});
@@ -161,10 +162,10 @@ public class ControlPanelView extends AbstractView {
 		case "Personal Information":
 			User user = null;
 			try {
-				user = db.getUser(getSession().getAttribute("username").toString());
+				user = getSession().getAttribute(User.class);
 			} catch (Exception e) {
 				Notification.show("Session error. Try signin again", Notification.Type.ERROR_MESSAGE);
-				getSession().setAttribute("username", null);
+				getSession().setAttribute(User.class, null);
 				navigator.navigateTo(Constants.LOGIN_VIEW);
 			}
 			
@@ -284,7 +285,8 @@ public class ControlPanelView extends AbstractView {
 			
 			listDomains.setRows(5);
 			try {
-				listDomains.addItems((Object[]) db.getDomains().toArray());
+				user = getSession().getAttribute(User.class);
+				listDomains.addItems((Object[]) db.getDomains(user).toArray());
 			} catch (SQLException sqle) {
 				Notification.show("There was an error reading server domains" + sqle.getMessage(), Notification.Type.ERROR_MESSAGE);
 			}

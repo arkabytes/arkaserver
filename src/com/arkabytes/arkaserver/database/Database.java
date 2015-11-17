@@ -70,6 +70,7 @@ public class Database {
 		ResultSet result = statement.executeQuery();
 		if (result.next()) {
 			User user = new User();
+			user.setId(result.getInt("id"));
 			user.setUsername(result.getString("username"));
 			user.setPassword(result.getString("password"));
 			user.setPrimaryEmail(result.getString("primary_email"));
@@ -154,8 +155,34 @@ public class Database {
 	public List<Domain> getDomains() throws SQLException {
 		
 		List<Domain> domains = new ArrayList<Domain>();
-		String sql = "SELECT id, name from virtual_domains";
+		String sql = "SELECT id, name FROM virtual_domains";
 		PreparedStatement statement = connection.prepareStatement(sql);
+		ResultSet result = statement.executeQuery();
+		
+		Domain domain = null;
+		while (result.next()) {
+			domain = new Domain();
+			domain.setId(result.getInt("id"));
+			domain.setName(result.getString("name"));
+			domain.setAccounts(getEmailAccounts(domain.getName()));
+			domains.add(domain);
+		}
+		
+		return domains;
+	}
+	
+	/**
+	 * Get all domains managed by the specified user
+	 * @param user
+	 * @return
+	 * @throws SQLException
+	 */
+	public List<Domain> getDomains(User user) throws SQLException {
+		
+		List<Domain> domains = new ArrayList<Domain>();
+		String sql = "SELECT id, name FROM virtual_domains WHERE user_id = ?";
+		PreparedStatement statement = connection.prepareStatement(sql);
+		statement.setInt(1, user.getId());
 		ResultSet result = statement.executeQuery();
 		
 		Domain domain = null;

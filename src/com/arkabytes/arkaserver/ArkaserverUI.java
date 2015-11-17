@@ -57,7 +57,7 @@ public class ArkaserverUI extends UI {
 			@Override
 			public boolean beforeViewChange(ViewChangeEvent event) {
 				if (event.getNewView() instanceof ControlPanelView) {
-					if (getSession().getAttribute("username") == null) {
+					if (getSession().getAttribute(User.class) == null) {
 						Notification.show("Permission denied", Notification.Type.ERROR_MESSAGE);
 						return false;
 					}
