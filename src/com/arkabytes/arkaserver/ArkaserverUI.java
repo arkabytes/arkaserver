@@ -29,8 +29,6 @@ public class ArkaserverUI extends UI {
 
 	private Navigator navigator;
 	private Database db;
-	private boolean userLoggedIn;
-	private User currentUser;
 	
 	@WebServlet(value = "/*", asyncSupported = true)
 	@VaadinServletConfiguration(productionMode = false, ui = ArkaserverUI.class, widgetset = "com.arkabytes.arkaserver.widgetset.ArkaserverWidgetset")
@@ -43,11 +41,14 @@ public class ArkaserverUI extends UI {
 		getPage().setTitle("Arkabytes Control Panel");
 		
 		db = new Database();
-		
 		navigator = new Navigator(this, this);
-		navigator.addView(Constants.LOGIN_VIEW, new LoginView(navigator, db));
-		navigator.addView(Constants.PASSWORD_LOST_VIEW, new PasswordLostView(navigator));
-		navigator.addView(Constants.CONTROL_PANEL_VIEW, new ControlPanelView(navigator, db));
+		
+		LoginView lView = new LoginView(navigator, db);
+		PasswordLostView plView = new PasswordLostView(navigator);
+		ControlPanelView cpView = new ControlPanelView(navigator, db);
+		navigator.addView(Constants.LOGIN_VIEW, lView);
+		navigator.addView(Constants.PASSWORD_LOST_VIEW, plView);
+		navigator.addView(Constants.CONTROL_PANEL_VIEW, cpView);
 		navigator.addViewChangeListener(new ViewChangeListener() {
 
 			@Override
@@ -66,5 +67,7 @@ public class ArkaserverUI extends UI {
 				return true;
 			}
 		});
+		
+		ControlPanelController cpController = new ControlPanelController(db, cpView);
 	}
 }

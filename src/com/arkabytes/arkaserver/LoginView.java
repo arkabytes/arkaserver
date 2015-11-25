@@ -102,8 +102,7 @@ public class LoginView extends AbstractView {
 				tfUser.clear();
 				tfPassword.clear();
 				tfPassword.setValue("");
-				getSession().setAttribute(User.class, user);
-				//getSession().setAttribute("username", user.getUsername());
+				getUI().getSession().setAttribute(User.class, user);
 				Notification.show("Sign in ok!", "Wellcome " + user.getName(), Notification.Type.HUMANIZED_MESSAGE);
 				navigator.navigateTo(Constants.CONTROL_PANEL_VIEW);
 			}
@@ -111,7 +110,7 @@ public class LoginView extends AbstractView {
 		} catch (SQLException sqle) {
 			Notification.show("Sign in error", sqle.getMessage(), Notification.Type.ERROR_MESSAGE);
 		} catch (Exception e) {
-			Notification.show("Connection error", "Contact with your provider to check database connection", Notification.Type.ERROR_MESSAGE);
+			Notification.show("Connection error", e.getLocalizedMessage() + "Contact with your provider to check database connection", Notification.Type.ERROR_MESSAGE);
 		}
 	}
 	

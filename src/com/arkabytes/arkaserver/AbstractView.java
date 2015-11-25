@@ -17,8 +17,8 @@ import com.vaadin.ui.VerticalLayout;
 @SuppressWarnings("serial")
 public abstract class AbstractView extends VerticalLayout implements View {
 
-	protected Database db;
-	protected Navigator navigator;
+	Database db;
+	Navigator navigator;
 	
 	public AbstractView(final Navigator navigator, Database db) {
 		
