@@ -10,3 +10,5 @@ Future features:
 * Manage email aliases
 * Manage FTP accounts
 * Manage Virtual Hosts
+
+arkaserver is made with [Vaadin](http://www.vaadin.com) web framework, so it is writter entirely in Java language
