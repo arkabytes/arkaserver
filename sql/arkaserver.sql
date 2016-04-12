@@ -17,7 +17,7 @@ CREATE TABLE virtual_domains (
     user_id int unsigned
 ) ENGINE=InnoDB;
 
-CREATE TABLE IF NOT EXISTS `virtual_users` (
+CREATE TABLE virtual_users (
     id int unsigned primary key auto_increment,
     domain_id int(11) NOT NULL,
     email varchar(50) NOT NULL,
@@ -29,4 +29,4 @@ CREATE TABLE recover_email (
 	link_code varchar(50) unique not null,
 	enabled boolean default true,
 	user_id int unsigned
-)
+) ENGINE=InnoDB;

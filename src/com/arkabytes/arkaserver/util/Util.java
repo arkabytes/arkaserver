@@ -1,6 +1,10 @@
 package com.arkabytes.arkaserver.util;
 
 import java.io.File;
+import java.math.BigInteger;
+import java.security.SecureRandom;
+import java.util.Random;
+import java.util.UUID;
 
 import com.vaadin.server.FileResource;
 import com.vaadin.server.VaadinService;
@@ -21,5 +25,11 @@ public class Util {
 		Image image = new Image(null, fileResource);
 		
 		return image;	
+	}
+	
+	public static String generateLinkCode() {
+		
+		UUID uuid = UUID.randomUUID();
+		return String.valueOf(uuid);	
 	}
 }

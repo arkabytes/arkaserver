@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import com.arkabytes.arkaserver.util.Util;
 import com.vaadin.server.FileResource;
 import com.vaadin.server.VaadinService;
 
@@ -283,5 +284,27 @@ public class Database {
 		ResultSet result = statement.executeQuery();
 		
 		return result.first();
+	}
+	
+	/**
+	 * 
+	 * @param userId
+	 */
+	public void addEmailRecovery(String username, String userEmail) {
+		
+		User user = getUser(username);
+		if (user.getPrimaryEmail() != userEmail) {
+			
+		}
+		
+		String linkCode = Util.generateLinkCode();
+		
+		String sql = "INSERT INTO email_recovery (link_code, enabled, user_id) VALUES (?, ?, ?)";
+		PreparedStatement statement = connection.prepareStatement(sql);
+		statement.setString(1, linkCode);
+		statement.setBoolean(2, true);
+		statement.setInt(3, user.getId());
+		
+		statement.executeUpdate();
 	}
 }
