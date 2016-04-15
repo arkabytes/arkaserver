@@ -25,7 +25,8 @@ import com.vaadin.ui.TextField;
 @SuppressWarnings("serial")
 public class PasswordLostView extends AbstractView {
 
-	private Button btRequest;
+	public TextField tfEmail;
+	public Button btRequest;
 	
 	public PasswordLostView(final Navigator navigator) {
 		
@@ -35,8 +36,9 @@ public class PasswordLostView extends AbstractView {
 		requestPanel.setWidth("400px");
 		addComponent(requestPanel);
 
-		TextField tfEmail = new TextField("E-Mail");
+		tfEmail = new TextField("E-Mail");
 		btRequest = new Button("Send my password");
+		btRequest.setWidth("250px");
 		btRequest.addClickListener(new Button.ClickListener() {
 			
 			@Override

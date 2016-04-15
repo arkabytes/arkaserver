@@ -69,5 +69,6 @@ public class ArkaserverUI extends UI {
 		});
 		
 		ControlPanelController cpController = new ControlPanelController(db, cpView);
+		PasswordLostController plController = new PasswordLostController(db, plView);
 	}
 }

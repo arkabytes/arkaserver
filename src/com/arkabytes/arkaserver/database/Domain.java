@@ -3,6 +3,11 @@ package com.arkabytes.arkaserver.database;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Information about a domain a everything related to
+ * @author Santiago Faci
+ *
+ */
 public class Domain {
 
 	private long id;

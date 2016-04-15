@@ -268,4 +268,20 @@ public class Database {
 		
 		return accounts;
 	}
+	
+	/**
+	 * Check if an user have an email address
+	 * @param email
+	 * @return
+	 * @throws SQLException
+	 */
+	public boolean existsEmail(String email) throws SQLException {
+		
+		String sql = "SELECT username FROM users WHERE primary_email = ?";
+		PreparedStatement statement = connection.prepareStatement(sql);
+		statement.setString(1, email);
+		ResultSet result = statement.executeQuery();
+		
+		return result.first();
+	}
 }
